@@ -22,7 +22,11 @@ public class Matriz {
 	}
 
 
-
+	/**
+	 * Recupera a requerida linha da matriz na forma de um Vetor.
+	 * @param linha numero da linha a ser recuperada.\nObs.: a primeira linha é 0.
+	 * @return a linha requerida na forma de Vetor.
+	 */
 	public Vetor getLinha(int linha) {
 		Vetor vetorResultado = new Vetor(numeroDeColunas);
 		for (int j = 0; j < numeroDeColunas; j++) {
@@ -31,6 +35,11 @@ public class Matriz {
 		return vetorResultado;
 	}
 	
+	/**
+	 * Recupera a requerida coluna da matriz na forma de um Vetor.
+	 * @param coluna numero da coluna a ser recuperada.\nObs.: a primeira coluna é 0.
+	 * @return a coluna requerida na forma de Vetor.
+	 */
 	public Vetor getColuna(int coluna) {
 		Vetor vetorResultado = new Vetor(numeroDeLinhas);
 		for (int i = 0; i < numeroDeLinhas; i++) {
@@ -39,6 +48,11 @@ public class Matriz {
 		return vetorResultado;
 	}
 	
+	/**
+	 * Insere o vetor coluna na matriz na posicao especificada.
+	 * @param j posicao especificada na qual a coluna sera inserida.\nObs.: a primeira coluna e 0.
+	 * @param vetorColuna o vetor coluna a ser inserido na matriz.
+	 */
 	public void setColuna(int j, Vetor vetorColuna) {
 		if (vetorColuna.getVetor().length == this.numeroDeLinhas) {
 			for (int i = 0; i < vetorColuna.getVetor().length; i++) {
@@ -47,9 +61,13 @@ public class Matriz {
 		} else {
 			System.out.println("Erro ao definir coluna: numero de elementos invalidos.");
 		}
-		
 	}
 	
+	/**
+	 * Insere o vetor linha na matriz na posicao especificada.
+	 * @param i posicao especificada na qual a linha sera inserida.\nObs.: a primeira linha e 0;
+	 * @param vetorLinha
+	 */
 	public void setLinha(int i, Vetor vetorLinha) {
 		if (vetorLinha.getVetor().length == this.numeroDeColunas) {
 			 for (int j = 0; j < vetorLinha.getVetor().length; j++) {
@@ -88,6 +106,14 @@ public class Matriz {
 
 	public void setMatriz(double[][] matriz) {
 		this.matriz = matriz;
+	}
+	
+	public Matriz getMatrizDeCovariancia() {
+		Matriz matrizResultado = new Matriz(numeroDeColunas, numeroDeColunas);
+		
+		//
+		
+		return matrizResultado;
 	}
 	
 	
