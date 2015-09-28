@@ -6,14 +6,23 @@ public class Matriz {
 	
 	private int numeroDeColunas;
 	
-	private Elemento[][] matriz;
+	private double[][] matriz;
 
 	public Matriz(int numeroDeLinhas, int numeroDeColunas) {
 		this.numeroDeLinhas = numeroDeLinhas;
 		this.numeroDeColunas = numeroDeColunas;
-		this.matriz = new Elemento[this.numeroDeLinhas][this.numeroDeColunas];
+		this.matriz = new double[this.numeroDeLinhas][this.numeroDeColunas];
 	}
 	
+
+	public Matriz(double[][] matriz, int numeroDeLinhas, int numeroDeColunas) {
+		this.matriz = matriz;
+		this.numeroDeLinhas = numeroDeLinhas;
+		this.numeroDeColunas = numeroDeColunas;
+	}
+
+
+
 	public Vetor getLinha(int linha) {
 		Vetor vetorResultado = new Vetor(numeroDeColunas);
 		for (int j = 0; j < numeroDeColunas; j++) {
@@ -51,4 +60,35 @@ public class Matriz {
 		}
 	}
 
+
+	public int getNumeroDeLinhas() {
+		return numeroDeLinhas;
+	}
+
+
+	public void setNumeroDeLinhas(int numeroDeLinhas) {
+		this.numeroDeLinhas = numeroDeLinhas;
+	}
+
+
+	public int getNumeroDeColunas() {
+		return numeroDeColunas;
+	}
+
+
+	public void setNumeroDeColunas(int numeroDeColunas) {
+		this.numeroDeColunas = numeroDeColunas;
+	}
+
+
+	public double[][] getMatriz() {
+		return matriz;
+	}
+
+
+	public void setMatriz(double[][] matriz) {
+		this.matriz = matriz;
+	}
+	
+	
 }
