@@ -20,6 +20,10 @@ public class Vetor {
 		this.vetor = vetor;
 	}
 	
+	/**
+	 * Calcula o valor médio do vetor(mean ou u(grego)).
+	 * @return valor mean do vetor.
+	 */
 	public double getMean() {
 		double soma = 0;
 		for (int i = 0; i < vetor.length; i++) {
@@ -29,6 +33,10 @@ public class Vetor {
 		return mean;
 	}
 	
+	/**
+	 * Calcula a variancia do vetor.
+	 * @return o valor da variancia.
+	 */
 	public double getVariance() {
 		double mean = getMean();
 		int n = vetor.length;
@@ -42,6 +50,11 @@ public class Vetor {
 		return variance;
 	}
 	
+	/**
+	 * Calcula a covariancia entre o vetor e outro vetor dado.
+	 * @param y o outro vetor dado.
+	 * @return o valor da covariancia dos dois vetores.
+	 */
 	public double getCovariance(Vetor y) {
 		double eX = this.getMean();
 		double eY = y.getMean();
