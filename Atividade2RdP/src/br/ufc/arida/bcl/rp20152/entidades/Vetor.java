@@ -58,16 +58,16 @@ public class Vetor {
 	public double getCovariance(Vetor y) {
 		double eX = this.getMean();
 		double eY = y.getMean();
-		double eXY = 0;
 		int n = vetor.length;
 		
 		double somaAux = 0;
 		for (int i = 0; i < vetor.length; i++) {
-			somaAux = vetor[i] * y.getVetor()[i];
+			double sX = vetor[i] - eX;
+			double sY = y.getVetor()[i] - eY;
+			somaAux += sX * sY;
 		}
-		eXY = somaAux / n;
 		
-		double covariance = eXY - (eX * eY);
+		double covariance = somaAux / n;
 		return covariance;
 	}
 	

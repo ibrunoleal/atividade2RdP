@@ -108,10 +108,32 @@ public class Matriz {
 		this.matriz = matriz;
 	}
 	
+	
 	public Matriz getMatrizDeCovariancia() {
 		Matriz matrizResultado = new Matriz(numeroDeColunas, numeroDeColunas);
 		
-		//
+		/*
+		 * Cada elemento da matriz resultante é dado pela covariancia entre
+		 * os vetores Xi e Xj.
+		 */
+		for (int i = 0; i < numeroDeColunas; i++) {
+			for (int j = 0; j < numeroDeColunas; j++) {
+				Vetor vetorAuxI = getColuna(i);
+				
+				/*
+				 * Na diagonal a covariancia entre Xi e Xi eh dado pela propria
+				 * variancia de Xi
+				 */
+				if (i == j) {
+					double variancia = vetorAuxI.getVariance();
+					matrizResultado.getMatriz()[i][j] = variancia;
+				} else {
+					Vetor vetorAuxJ = getColuna(j);
+					double covariancia = vetorAuxI.getCovariance(vetorAuxJ);
+					matrizResultado.getMatriz()[i][j] = covariancia;
+				}
+			}
+		}
 		
 		return matrizResultado;
 	}
