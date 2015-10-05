@@ -29,35 +29,43 @@ public class Teste {
 		
 		System.out.println("-----------------------");
 		
-		System.out.println("Matriz teste");
-		double[] x1 = {5.0,6.0,2.0,4.0,8.0};
-		Vetor vetorX1 = new Vetor(x1);
-		double[] x2 = {5.0,4.0,2.0,1.0,8.0};
-		Vetor vetorX2 = new Vetor(x2);
-		double[] x3 = {0.0,1.0,0.0,2.0,2.0};
-		Vetor vetorX3 = new Vetor(x3);
-		Matriz matrizTeste = new Matriz(5, 3);
-		matrizTeste.setColuna(0, vetorX1);
-		matrizTeste.setColuna(1, vetorX2);
-		matrizTeste.setColuna(2, vetorX3);
+//		System.out.println("Matriz teste");
+//		double[] x1 = {5.0,6.0,2.0,4.0,8.0};
+//		Vetor vetorV1 = new Vetor(x1);
+//		double[] x2 = {5.0,4.0,2.0,1.0,8.0};
+//		Vetor vetorV2 = new Vetor(x2);
+//		double[] x3 = {0.0,1.0,0.0,2.0,2.0};
+//		Vetor vetorV3 = new Vetor(x3);
+//		Matriz matrizTeste = new Matriz(5, 3);
+//		matrizTeste.setColuna(0, vetorV1);
+//		matrizTeste.setColuna(1, vetorV2);
+//		matrizTeste.setColuna(2, vetorV3);
+//		
+//		for (int i = 0; i < matrizTeste.getNumeroDeLinhas(); i++) {
+//			System.out.println(matrizTeste.getLinha(i));
+//		}
 		
-		for (int i = 0; i < matrizTeste.getNumeroDeLinhas(); i++) {
-			System.out.println(matrizTeste.getLinha(i));
-		}
+		System.out.println("x1 mean = " + matriz.getColuna(0).getMean());
+		System.out.println("x2 mean = " + matriz.getColuna(1).getMean());
+		System.out.println("x3 mean = " + matriz.getColuna(2).getMean());
 		
-		System.out.println("x1 variance = " + vetorX1.getVariance());
-		System.out.println("x2 variance = " + vetorX2.getVariance());
-		System.out.println("x3 variance = " + vetorX3.getVariance());
+		System.out.println("x1,x2 covariance = " + matriz.getColuna(0).getCovariance(matriz.getColuna(1)));
+		System.out.println("x1,x3 covariance = " + matriz.getColuna(0).getCovariance(matriz.getColuna(2)));
+		System.out.println("x2,x3 covariance = " + matriz.getColuna(1).getCovariance(matriz.getColuna(2)));
 		
-		System.out.println("covariancia x1 e x2 = " + vetorX1.getCovariance(vetorX2));
-		System.out.println("covariancia x1 e x3 = " + vetorX1.getCovariance(vetorX3));
-		System.out.println("covariancia x2 e x3 = " + vetorX2.getCovariance(vetorX3));
+//		System.out.println("v1 variance = " + vetorV1.getVariance());
+//		System.out.println("v2 variance = " + vetorV2.getVariance());
+//		System.out.println("v3 variance = " + vetorV3.getVariance());
+//		
+//		System.out.println("covariancia v1 e v2 = " + vetorV1.getCovariance(vetorV2));
+//		System.out.println("covariancia v1 e v3 = " + vetorV1.getCovariance(vetorV3));
+//		System.out.println("covariancia v2 e v3 = " + vetorV2.getCovariance(vetorV3));
 		
-		System.out.println("Matriz de covariancia da matriz teste");
-		Matriz matrizTesteCovariancia = new Matriz(matrizTeste.getMatrizDeCovariancia().getMatriz(), matrizTeste.getNumeroDeColunas(), matrizTeste.getNumeroDeColunas());
-		for (int i = 0; i < matrizTesteCovariancia.getNumeroDeLinhas(); i++) {
-			System.out.println(matrizTesteCovariancia.getLinha(i));
-		}
+//		System.out.println("Matriz de covariancia da matriz teste");
+//		Matriz matrizTesteCovariancia = new Matriz(matrizTeste.getMatrizDeCovariancia().getMatriz(), matrizTeste.getNumeroDeColunas(), matrizTeste.getNumeroDeColunas());
+//		for (int i = 0; i < matrizTesteCovariancia.getNumeroDeLinhas(); i++) {
+//			System.out.println(matrizTesteCovariancia.getLinha(i));
+//		}
 	}
 
 }

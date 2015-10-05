@@ -67,7 +67,7 @@ public class Vetor {
 			somaAux += sX * sY;
 		}
 		
-		double covariance = somaAux / n;
+		double covariance = somaAux / (n-1);
 		return covariance;
 	}
 	
