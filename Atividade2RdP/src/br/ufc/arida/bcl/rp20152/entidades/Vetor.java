@@ -71,6 +71,10 @@ public class Vetor {
 		return covariance;
 	}
 	
+	public int getSize() {
+		return vetor.length;
+	}
+	
 	public String toString() {
 		String resultado = "[";
 		for (int i = 0; i < (vetor.length - 1); i++) {
