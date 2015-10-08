@@ -48,6 +48,11 @@ public class KNN {
 		List<Double> listaDeVizinhosAEsquerda = new ArrayList<>();
 		List<Double> listaDeVizinhosADireita = new ArrayList<>();
 		
+		/*
+		 * Recupera os valores dos K vizinhos mais próximos e dividem esses valores
+		 * em listas dos que estao a esquerda do ponto de referencia (menores ou iguais) e dos que estao
+		 * a direita (maiores)
+		 */
 		List<Integer> listaDeIndices = getTheIndexOfTheKNearestNeighbour(referencePoint);
 		for (Integer indice : listaDeIndices) {
 			double ponto = vetor.getVetor()[indice];
@@ -58,6 +63,9 @@ public class KNN {
 			}
 		}
 		
+		/*
+		 * verifica o ponto mais a esquerda e o mais a direita para calcular V
+		 */
 		double pontoEsquerda;
 		double pontoDireita;
 		double v = 0;

@@ -1,8 +1,14 @@
 package br.ufc.arida.bcl.rp20152.aplicacao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufc.arida.bcl.rp20152.arquivos.FileHandler;
 import br.ufc.arida.bcl.rp20152.entidades.Matriz;
 import br.ufc.arida.bcl.rp20152.entidades.Vetor;
+import br.ufc.arida.bcl.rp20152.grafico.Grafico;
+import br.ufc.arida.bcl.rp20152.grafico.PontoDoGrafico;
+import br.ufc.arida.bcl.rp20152.knn.KNN;
 
 
 public class Teste {
@@ -66,6 +72,29 @@ public class Teste {
 //		for (int i = 0; i < matrizTesteCovariancia.getNumeroDeLinhas(); i++) {
 //			System.out.println(matrizTesteCovariancia.getLinha(i));
 //		}
+		
+		PontoDoGrafico p1 = new PontoDoGrafico(1.0,2.0);
+		PontoDoGrafico p2 = new PontoDoGrafico(2.0,4.0);
+		PontoDoGrafico p3 = new PontoDoGrafico(3.0,6.0);
+		List<PontoDoGrafico> lista = new ArrayList<PontoDoGrafico>();
+		lista.add(p1); lista.add(p2); lista.add(p3);
+		Grafico graf = new Grafico("teste");
+		graf.adicionarSerie(lista, "serie teste");
+		graf.exibirGrafico();
+		
+		Grafico g = new Grafico("Grafico de densidade de X1");
+		Vetor x1 = matriz.getColuna(0);
+		List<PontoDoGrafico> listaDePontos = new ArrayList<PontoDoGrafico>();
+		for(int i = 0; i < x1.getSize(); i++) {
+			KNN knn = new KNN(x1, 5);
+			double x = x1.getVetor()[i];
+			double y = knn.getDensidade(x);
+			PontoDoGrafico pontoDoGrafico = new PontoDoGrafico(x, y);
+			listaDePontos.add(pontoDoGrafico);
+		}
+		g.adicionarSerie(listaDePontos, "X1");
+		g.exibirGrafico();
+		
 	}
 
 }
