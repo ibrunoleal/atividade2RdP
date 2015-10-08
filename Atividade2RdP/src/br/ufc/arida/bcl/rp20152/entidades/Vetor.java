@@ -2,6 +2,8 @@ package br.ufc.arida.bcl.rp20152.entidades;
 
 public class Vetor {
 	
+	private String nome;
+	
 	private double[] vetor;
 
 	public Vetor(int size) {
@@ -73,10 +75,18 @@ public class Vetor {
 	
 	public int getSize() {
 		return vetor.length;
-	}
+	}	
 	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public String toString() {
-		String resultado = "[";
+		String resultado = nome + "[";
 		for (int i = 0; i < (vetor.length - 1); i++) {
 			resultado += vetor[i] + " , ";
 		}
