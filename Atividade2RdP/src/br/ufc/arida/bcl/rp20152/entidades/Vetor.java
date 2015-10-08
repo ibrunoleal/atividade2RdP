@@ -1,5 +1,8 @@
 package br.ufc.arida.bcl.rp20152.entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vetor {
 	
 	private String nome;
@@ -71,6 +74,65 @@ public class Vetor {
 		
 		double covariance = somaAux / (n-1);
 		return covariance;
+	}
+	
+	public double getMinValue() {
+		double min = vetor[0];
+		for (int i = 0; i < vetor.length; i++) {
+			if (vetor[i] < min) {
+				min = vetor[i];
+			}
+		}
+		return min;
+	}
+	
+	public double getMaxValue() {
+		double max = vetor[0];
+		for (int i = 0; i < vetor.length; i++) {
+			if (vetor[i] > max) {
+				max = vetor[i];
+			}
+		}
+		return max;
+	}
+	
+	public List<Double> getPontosDeReferencia(int quantidade) {
+		ArrayList<Double> pontosDeReferencia = new ArrayList<>();
+		
+		double pontoA = getMinValue();
+		double pontoB = getMaxValue();
+		double distancia = calcularDistancia(pontoA, pontoB);
+		double espaco = distancia / quantidade;
+		
+		/*
+		 * centralizar o ponto no espaco
+		 */
+		double ponto = pontoA + (espaco / 2);
+		pontosDeReferencia.add(ponto);
+		for (int i = 0; i < quantidade; i++) {
+			ponto = ponto + espaco;
+			pontosDeReferencia.add(ponto);
+		}
+		
+		return pontosDeReferencia;
+	}
+	
+	/**
+	 * Dados dois pontos do vetor, calcula a distancia entre eles.
+	 * @param pontoA ponto A
+	 * @param pontoB ponto B
+	 * @return o valor da distancia entre os pontoA e o pontoB
+	 */
+	private double calcularDistancia(double pontoA, double pontoB) {
+		if (pontoA < 0 && pontoB < 0) {
+			return Math.abs(pontoA - pontoB);
+		} else {
+			if (pontoA > 0 && pontoB > 0) {
+				return Math.abs(pontoA - pontoB);
+			} else {
+				return Math.abs(pontoA) + Math.abs(pontoB);
+			}
+		}
 	}
 	
 	public int getSize() {

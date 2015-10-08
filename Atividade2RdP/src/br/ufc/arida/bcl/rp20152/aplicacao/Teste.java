@@ -73,21 +73,22 @@ public class Teste {
 //			System.out.println(matrizTesteCovariancia.getLinha(i));
 //		}
 		
-		PontoDoGrafico p1 = new PontoDoGrafico(1.0,2.0);
-		PontoDoGrafico p2 = new PontoDoGrafico(2.0,4.0);
-		PontoDoGrafico p3 = new PontoDoGrafico(3.0,6.0);
-		List<PontoDoGrafico> lista = new ArrayList<PontoDoGrafico>();
-		lista.add(p1); lista.add(p2); lista.add(p3);
-		Grafico graf = new Grafico("teste");
-		graf.adicionarSerie(lista, "serie teste");
-		graf.exibirGrafico();
+//		PontoDoGrafico p1 = new PontoDoGrafico(1.0,2.0);
+//		PontoDoGrafico p2 = new PontoDoGrafico(2.0,4.0);
+//		PontoDoGrafico p3 = new PontoDoGrafico(3.0,6.0);
+//		List<PontoDoGrafico> lista = new ArrayList<PontoDoGrafico>();
+//		lista.add(p1); lista.add(p2); lista.add(p3);
+//		Grafico graf = new Grafico("teste");
+//		graf.adicionarSerie(lista, "serie teste");
+//		graf.exibirGrafico();
 		
 		Grafico g = new Grafico("Grafico de densidade de X1");
-		Vetor x1 = matriz.getColuna(0);
+		Vetor x1 = matriz.getColuna(1);
 		List<PontoDoGrafico> listaDePontos = new ArrayList<PontoDoGrafico>();
-		for(int i = 0; i < x1.getSize(); i++) {
+		List<Double> pontosDeReferencia = x1.getPontosDeReferencia(100);
+		for(int i = 0; i < pontosDeReferencia.size(); i++) {
 			KNN knn = new KNN(x1, 5);
-			double x = x1.getVetor()[i];
+			double x = pontosDeReferencia.get(i);
 			double y = knn.getDensidade(x);
 			PontoDoGrafico pontoDoGrafico = new PontoDoGrafico(x, y);
 			listaDePontos.add(pontoDoGrafico);
