@@ -11,23 +11,79 @@ public class KNN {
 	
 	private int K;
 	
+	/**
+	 * Numero de elementos do vetor.
+	 */
 	private int N;
 	
+	/**
+	 * 
+	 * @param vetor vetor de valores.
+	 * @param K numero de vizinhos mais proximos para o algoritmo KNN.
+	 */
 	public KNN(Vetor vetor, int K) {
 		this.vetor = vetor;
 		this.K = K;
 		this.N = vetor.getSize();
 	}
 	
-	public double getValueV(double point) {
+	/**
+	 * Calcula P(x) atraves da densidade no ponto x por meio do KNN.
+	 * Utiliza a formula p(x) = K / (V*N).
+	 * @param x o ponto de referencia para o qual será calculado a probabilidade(densidade).
+	 * @return o valor de P(x).
+	 */
+	public double getDensidade(double x)  {
+		double px = K / (getV(x) * N);
+		return px;
+	}
+	
+	/**
+	 * Calcula o valor de V a ser utilizado no calculo da densidade.
+	 * @param referencePoint ponto de referencia para pegar os K vizinhos mais
+	 * proximos e calcular V.
+	 * @return o valor de V em relacao ao ponto de referencia dado.
+	 */
+	public double getV(double referencePoint) {
+		List<Double> listaDeVizinhosAEsquerda = new ArrayList<>();
+		List<Double> listaDeVizinhosADireita = new ArrayList<>();
 		
-		return 0;
+		List<Integer> listaDeIndices = getTheIndexOfTheKNearestNeighbour(referencePoint);
+		for (Integer indice : listaDeIndices) {
+			double ponto = vetor.getVetor()[indice];
+			if (ponto <= referencePoint) {
+				listaDeVizinhosAEsquerda.add(ponto);
+			} else {
+				listaDeVizinhosADireita.add(ponto);
+			}
+		}
+		
+		double pontoEsquerda;
+		double pontoDireita;
+		double v = 0;
+		if (listaDeVizinhosAEsquerda.size() > 0 && listaDeVizinhosADireita.size() > 0) {
+			pontoEsquerda = getSmallerFromList(listaDeVizinhosAEsquerda);
+			pontoDireita = getBiggerFromList(listaDeVizinhosADireita);
+			v = calcularDistancia(pontoEsquerda, pontoDireita);
+		} else {
+			if (listaDeVizinhosAEsquerda.size() > 0 && listaDeVizinhosADireita.size() == 0) {
+				pontoEsquerda = getSmallerFromList(listaDeVizinhosAEsquerda);
+				v = calcularDistancia(referencePoint, pontoEsquerda);
+			} else {
+				if (listaDeVizinhosAEsquerda.size() == 0 && listaDeVizinhosADireita.size() > 0) {
+					pontoDireita = getBiggerFromList(listaDeVizinhosADireita);
+					v = calcularDistancia(referencePoint, pontoDireita);
+				}
+			}
+		}
+		return v;
 	}
 	
 	/**
 	 * Dado um ponto qualquer no espaço do vetor, computa os K vizinhos mais proximos deste ponto.
 	 * @param localPoint o ponto de referencia para pegar os K vizinhos mais proximos.
-	 * @return uma lista com os K indices do vetor dos pontos mais proximos do dado referencial.
+	 * @return uma lista com os K indices do vetor dos pontos mais proximos
+	 * do dado referencial em ordem crescente de distancia.
 	 */
 	public List<Integer> getTheIndexOfTheKNearestNeighbour(double localPoint) {
 		List<Double> listaDeDistancias = new ArrayList<>();
@@ -66,6 +122,26 @@ public class KNN {
 		return menorIndice;
 	}
 	
+	private double getSmallerFromList(List<Double> lista) {
+		double menorNumero = lista.get(0);
+		for (Double num : lista) {
+			if (num < menorNumero){
+				menorNumero = num;
+			}
+		}
+		return menorNumero;
+	}
+	
+	private double getBiggerFromList(List<Double> lista) {
+		double maiorNumero = lista.get(0);
+		for (Double num : lista) {
+			if (num > maiorNumero){
+				maiorNumero = num;
+			}
+		}
+		return maiorNumero;
+	}
+	
 	/**
 	 * Metodo auxiliar. Verifica se uma dada lista contem um valor.
 	 * @param lista de valores.
@@ -85,11 +161,18 @@ public class KNN {
 	 * Dados dois pontos do vetor, calcula a distancia entre eles.
 	 * @param pontoA ponto A
 	 * @param pontoB ponto B
-	 * @return o valor da distancia absoluta entre os pontoA e o pontoB
+	 * @return o valor da distancia entre os pontoA e o pontoB
 	 */
 	private double calcularDistancia(double pontoA, double pontoB) {
-		return Math.abs(pontoA - pontoB);
+		if (pontoA < 0 && pontoB < 0) {
+			return Math.abs(pontoA - pontoB);
+		} else {
+			if (pontoA > 0 && pontoB > 0) {
+				return Math.abs(pontoA - pontoB);
+			} else {
+				return Math.abs(pontoA) + Math.abs(pontoB);
+			}
+		}
 	}
-
 
 }
