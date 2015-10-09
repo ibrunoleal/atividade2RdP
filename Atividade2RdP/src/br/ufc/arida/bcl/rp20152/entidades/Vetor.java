@@ -5,10 +5,8 @@ import java.util.List;
 
 public class Vetor {
 	
-	private String nome;
-	
 	private double[] vetor;
-
+	
 	public Vetor(int size) {
 		this.vetor = new double[size];
 	}
@@ -16,7 +14,7 @@ public class Vetor {
 	public Vetor(double[] vetor) {
 		this.vetor = vetor;
 	}
-
+	
 	public double[] getVetor() {
 		return vetor;
 	}
@@ -105,13 +103,18 @@ public class Vetor {
 		double espaco = distancia / quantidade;
 		
 		/*
-		 * centralizar o ponto no espaco
+		 * centralizar o ponto no espaco V
 		 */
 		double ponto = pontoA + (espaco / 2);
-		pontosDeReferencia.add(ponto);
+		
+		/*
+		 * NAO centralizar o ponto no espaco V
+		 */
+		//double ponto = pontoA;
+		
 		for (int i = 0; i < quantidade; i++) {
-			ponto = ponto + espaco;
 			pontosDeReferencia.add(ponto);
+			ponto = ponto + espaco;
 		}
 		
 		return pontosDeReferencia;
@@ -138,17 +141,32 @@ public class Vetor {
 	public int getSize() {
 		return vetor.length;
 	}	
-	
-	public String getNome() {
-		return nome;
-	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	
+	/**
+	 * Cria uma nova instancia do vetor de forma ordenada crescente.
+	 * @return um novo Vetor com os elementos ordenados de forma crescente.
+	 */
+	public Vetor getVetorOrdenado() {
+		int j;
+        double key;
+        int i;
+        double[] vetorAux = vetor;
+
+        for (j = 1; j < vetorAux.length; j++) {
+               key = vetorAux[j];
+               for (i = j - 1; (i >= 0) && (vetorAux[i] > key); i--) {
+                      vetorAux[i + 1] = vetorAux[i];
+               }
+               vetorAux[i + 1] = key;
+        }
+        
+        Vetor vet = new Vetor(vetorAux);
+        return vet;
 	}
 
 	public String toString() {
-		String resultado = nome + "[";
+		String resultado = "[";
 		for (int i = 0; i < (vetor.length - 1); i++) {
 			resultado += vetor[i] + " , ";
 		}

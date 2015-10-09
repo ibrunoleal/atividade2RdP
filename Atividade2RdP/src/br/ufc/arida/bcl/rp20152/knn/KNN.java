@@ -45,45 +45,59 @@ public class KNN {
 	 * @return o valor de V em relacao ao ponto de referencia dado.
 	 */
 	public double getV(double referencePoint) {
-		List<Double> listaDeVizinhosAEsquerda = new ArrayList<>();
-		List<Double> listaDeVizinhosADireita = new ArrayList<>();
-		
 		/*
 		 * Recupera os valores dos K vizinhos mais próximos e dividem esses valores
 		 * em listas dos que estao a esquerda do ponto de referencia (menores ou iguais) e dos que estao
 		 * a direita (maiores)
 		 */
 		List<Integer> listaDeIndices = getTheIndexOfTheKNearestNeighbour(referencePoint);
-		for (Integer indice : listaDeIndices) {
-			double ponto = vetor.getVetor()[indice];
-			if (ponto <= referencePoint) {
-				listaDeVizinhosAEsquerda.add(ponto);
-			} else {
-				listaDeVizinhosADireita.add(ponto);
-			}
-		}
+		
+		/*
+		 * O V da formula p(x) = K / (N*V)
+		 */
+		double v = 0;
+		
+		int indiceDoMaisDistante = listaDeIndices.get((K-1));
+		double pontoMaisDistante = getPontoDoVetorPeloIndice(indiceDoMaisDistante);
+		
+		v = 2 * calcularDistancia(pontoMaisDistante, referencePoint);
 		
 		/*
 		 * verifica o ponto mais a esquerda e o mais a direita para calcular V
+		 * descomentar essa parte para considear v como o espaco compreendido entre
+		 * os K pontos mais proximos e o ponto de referencia considerando o mais a esquerda
+		 * e o mais a direita
 		 */
-		double pontoEsquerda;
-		double pontoDireita;
-		double v = 0;
-		if (listaDeVizinhosAEsquerda.size() > 0 && listaDeVizinhosADireita.size() > 0) {
-			pontoEsquerda = getSmallerFromList(listaDeVizinhosAEsquerda);
-			pontoDireita = getBiggerFromList(listaDeVizinhosADireita);
-			v = calcularDistancia(pontoEsquerda, pontoDireita);
-		} else {
-			if (listaDeVizinhosAEsquerda.size() > 0 && listaDeVizinhosADireita.size() == 0) {
-				pontoEsquerda = getSmallerFromList(listaDeVizinhosAEsquerda);
-				v = calcularDistancia(referencePoint, pontoEsquerda);
-			} else {
-				if (listaDeVizinhosAEsquerda.size() == 0 && listaDeVizinhosADireita.size() > 0) {
-					pontoDireita = getBiggerFromList(listaDeVizinhosADireita);
-					v = calcularDistancia(referencePoint, pontoDireita);
-				}
-			}
-		}
+//		List<Double> listaDeVizinhosAEsquerda = new ArrayList<>();
+//		List<Double> listaDeVizinhosADireita = new ArrayList<>();
+//		for (Integer indice : listaDeIndices) {
+//			double ponto = vetor.getVetor()[indice];
+//			if (ponto <= referencePoint) {
+//				listaDeVizinhosAEsquerda.add(ponto);
+//			} else {
+//				listaDeVizinhosADireita.add(ponto);
+//			}
+//		}
+//				
+//		double pontoEsquerda;
+//		double pontoDireita;
+//		
+//		if (listaDeVizinhosAEsquerda.size() > 0 && listaDeVizinhosADireita.size() > 0) {
+//			pontoEsquerda = getSmallerFromList(listaDeVizinhosAEsquerda);
+//			pontoDireita = getBiggerFromList(listaDeVizinhosADireita);
+//			v = calcularDistancia(pontoEsquerda, pontoDireita);
+//		} else {
+//			if (listaDeVizinhosAEsquerda.size() > 0 && listaDeVizinhosADireita.size() == 0) {
+//				pontoEsquerda = getSmallerFromList(listaDeVizinhosAEsquerda);
+//				v = calcularDistancia(referencePoint, pontoEsquerda);
+//			} else {
+//				if (listaDeVizinhosAEsquerda.size() == 0 && listaDeVizinhosADireita.size() > 0) {
+//					pontoDireita = getBiggerFromList(listaDeVizinhosADireita);
+//					v = calcularDistancia(referencePoint, pontoDireita);
+//				}
+//			}
+//		}
+		
 		return v;
 	}
 	
@@ -94,76 +108,40 @@ public class KNN {
 	 * do dado referencial em ordem crescente de distancia.
 	 */
 	public List<Integer> getTheIndexOfTheKNearestNeighbour(double localPoint) {
+		
+		/*
+		 * Forma uma lista com todas as distancias do localPoint em relacao aos pontos do vetor
+		 */
 		List<Double> listaDeDistancias = new ArrayList<>();
 		for (int i = 0; i < vetor.getSize(); i++) {
 			double distancia = calcularDistancia(localPoint, vetor.getVetor()[i]);
 			listaDeDistancias.add(distancia);
 		}
 		
+		/*
+		 * Forma a lista com os indices das K menores distancias em ordem crescente
+		 */
 		List<Integer> indicesSelecionados = new ArrayList<>();
+		List<Double> listaDeDistanciasOrdenadas = getListaOrdenada(listaDeDistancias);
 		int cont = 0;
 		while(cont < K) {
-			int indice = getIndexOfTheSmallerFromList(listaDeDistancias, indicesSelecionados);
-			indicesSelecionados.add(indice);
-			cont++;
+			double distancia = listaDeDistanciasOrdenadas.get(cont);
+			for (int i = 0; i < listaDeDistancias.size(); i++) {
+				if (distancia == listaDeDistancias.get(i)) {
+					indicesSelecionados.add(i);
+					cont++;
+					break;
+				}
+			}
 		}
+		
 		return indicesSelecionados;
 	}
 	
-	/**
-	 * Dado uma lista recupera o indice do elemento com menor valor.
-	 * @param lista lista na qual será pesquisada o menor valor.
-	 * @param impedidos lista de indices que devem ser excluídos da pesquisa.
-	 * @return o índice do elemento da lista com menor valor, excluido-se 
-	 * os elementos da lista de impedidos.
-	 */
-	private int getIndexOfTheSmallerFromList(List<Double> lista, List<Integer> impedidos) {
-		double menorNumero = lista.get(0);
-		int menorIndice = 0;
-		for (int i = 0; i < lista.size(); i++) {
-			double num = lista.get(i);
-			if (num < menorNumero && !listaContemNumero(impedidos, i)) {
-				menorNumero = num;
-				menorIndice = i;
-			}
-		}
-		return menorIndice;
+	private double getPontoDoVetorPeloIndice(int indice) {
+		return vetor.getVetor()[indice];
 	}
 	
-	private double getSmallerFromList(List<Double> lista) {
-		double menorNumero = lista.get(0);
-		for (Double num : lista) {
-			if (num < menorNumero){
-				menorNumero = num;
-			}
-		}
-		return menorNumero;
-	}
-	
-	private double getBiggerFromList(List<Double> lista) {
-		double maiorNumero = lista.get(0);
-		for (Double num : lista) {
-			if (num > maiorNumero){
-				maiorNumero = num;
-			}
-		}
-		return maiorNumero;
-	}
-	
-	/**
-	 * Metodo auxiliar. Verifica se uma dada lista contem um valor.
-	 * @param lista de valores.
-	 * @param numero valor a ser verficado se existe na lista.
-	 * @return true se o valor se encontra na lista, false c.c.
-	 */
-	private boolean listaContemNumero(List<Integer> lista, int numero) {
-		for (Integer integer : lista) {
-			if (integer == numero) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	/**
 	 * Dados dois pontos do vetor, calcula a distancia entre eles.
@@ -172,15 +150,28 @@ public class KNN {
 	 * @return o valor da distancia entre os pontoA e o pontoB
 	 */
 	private double calcularDistancia(double pontoA, double pontoB) {
-		if (pontoA < 0 && pontoB < 0) {
-			return Math.abs(pontoA - pontoB);
+		if (pontoA >= pontoB) {
+			return pontoA - pontoB;
 		} else {
-			if (pontoA > 0 && pontoB > 0) {
-				return Math.abs(pontoA - pontoB);
-			} else {
-				return Math.abs(pontoA) + Math.abs(pontoB);
-			}
+			return pontoB - pontoA;
 		}
+	}
+	
+	public List<Double> getListaOrdenada(List<Double> lista) {	
+		int j;
+        double key;
+        int i;
+        List<Double> listaAux = new ArrayList<>(lista);
+
+        for (j = 1; j < listaAux.size(); j++) {
+               key = listaAux.get(j);
+               for (i = j - 1; (i >= 0) && (listaAux.get(i) > key); i--) {
+                      listaAux.set(i + 1, listaAux.get(i));
+               }
+               listaAux.set(i + 1,key);
+        }
+        
+        return listaAux;
 	}
 
 }

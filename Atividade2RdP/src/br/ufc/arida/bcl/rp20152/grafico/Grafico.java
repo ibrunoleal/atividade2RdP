@@ -1,4 +1,5 @@
 package br.ufc.arida.bcl.rp20152.grafico;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.data.xy.XYDataset;
@@ -28,14 +30,17 @@ public class Grafico extends ApplicationFrame {
 	
 	private List<XYSeries> series;
 	
-	public Grafico(String tituloDaAplicacao) {
+	private String tituloDoGrafico;
+	
+	public Grafico(String tituloDaAplicacao, String tituloDoGrafico) {
 		super(tituloDaAplicacao);
+		this.tituloDoGrafico = tituloDoGrafico;
 		series = new ArrayList<XYSeries>();
 	}
 	
 	public void construirParaExibicao() {
 		dataset = createDataset();
-		chart = createChart(dataset, "Grafico de P(x) por densidade", "x", "P(x)");
+		chart = createChart(dataset, "x", "p(x)");
 
 		//chart = ChartFactory.createBarChart(tituloDoGrafico, legendaX, tipoDeValorX, dataset);
 		//chart = ChartFactory.createLineChart(tituloDoGrafico, legendaX, tipoDeValorX, dataset);
@@ -61,7 +66,7 @@ public class Grafico extends ApplicationFrame {
 		return dataset;
 	}
 	
-	private JFreeChart createChart(XYDataset dataset, String tituloDoGrafico, String labelX, String labelY) {
+	private JFreeChart createChart(XYDataset dataset, String labelX, String labelY) {
 		
 		JFreeChart chart = ChartFactory.createXYLineChart(tituloDoGrafico,// chart title
 				labelX, // x axis label
@@ -71,6 +76,11 @@ public class Grafico extends ApplicationFrame {
 				true, // tooltips
 				false // urls
 		);
+		
+		XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(Color.white);
+        plot.setDomainGridlinePaint(Color.gray);
+        plot.setRangeGridlinePaint(Color.gray);
 		
 		/*
 		 * Inserir customizacao do grafico aqui

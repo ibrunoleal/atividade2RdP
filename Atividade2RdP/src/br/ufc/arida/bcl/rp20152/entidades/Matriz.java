@@ -138,5 +138,11 @@ public class Matriz {
 		return matrizResultado;
 	}
 	
-	
+	public String toString() {
+		String texto = "";
+		for (int i = 0; i < numeroDeLinhas; i++) {
+			texto += getLinha(i) + "\n";
+		}
+		return texto;
+	}
 }
