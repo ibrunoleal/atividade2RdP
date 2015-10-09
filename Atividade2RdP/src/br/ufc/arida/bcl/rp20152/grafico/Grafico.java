@@ -101,7 +101,7 @@ public class Grafico extends ApplicationFrame {
 		String nomeAleatorio = "grafico" + nomeAux.substring(0,5) + ".jpg";
 
 		try {
-			ChartUtilities.saveChartAsJPEG(new java.io.File(nomeAleatorio), chart, 700, 600);
+			ChartUtilities.saveChartAsJPEG(new java.io.File(nomeAleatorio), chart, 1280, 720);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

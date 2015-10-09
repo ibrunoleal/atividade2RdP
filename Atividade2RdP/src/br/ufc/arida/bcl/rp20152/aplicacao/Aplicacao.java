@@ -47,6 +47,7 @@ public class Aplicacao {
 		}
 		g.adicionarSerie(listaDePontos, "X" + numVetor);
 		g.exibirGrafico();
+		g.exportarGraficoComoFigura();
 	}
 
 }
