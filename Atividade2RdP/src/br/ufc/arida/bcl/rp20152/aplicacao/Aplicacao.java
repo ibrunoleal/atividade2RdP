@@ -88,7 +88,7 @@ public class Aplicacao {
 			/*
 			 * Descomentar para visualizar os pontos do grafico
 			 */
-			//System.out.println(pontoDoGrafico);
+			System.out.println(pontoDoGrafico);
 			listaDePontos.add(pontoDoGrafico);
 		}
 		g.adicionarSerie(listaDePontos, "X" + numVetor);
