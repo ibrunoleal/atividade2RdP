@@ -63,8 +63,8 @@ public class KNN {
 		v = 2 * calcularDistancia(pontoMaisDistante, referencePoint);
 		
 		/*
-		 * verifica o ponto mais a esquerda e o mais a direita para calcular V
-		 * descomentar essa parte para considear v como o espaco compreendido entre
+		 * Verifica o ponto mais a esquerda e o mais a direita para calcular V.
+		 * Descomentar essa parte para considear v como o espaco compreendido entre
 		 * os K pontos mais proximos e o ponto de referencia considerando o mais a esquerda
 		 * e o mais a direita
 		 */
